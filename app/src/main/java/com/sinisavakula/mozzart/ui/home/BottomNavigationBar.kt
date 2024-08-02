@@ -26,5 +26,12 @@ fun BottomNavigationBar(selectedIndex: Int, onItemSelected: (Int) -> Unit) {
             onClick ={if (selectedIndex != 1) onItemSelected(1)},
             isSelected = selectedIndex == 1
         )
+        BottomNavigationItem(
+            modifier = Modifier.weight(1F),
+            title = stringResource(id = R.string.live_draw),
+            drawable = R.drawable.ic_live_draw,
+            onClick ={if (selectedIndex != 2) onItemSelected(2)},
+            isSelected = selectedIndex == 2
+        )
     }
 }
