@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 
 abstract class HomeViewModel : ViewModel() {
-
     abstract val rounds: Flow<List<Round>>
+    abstract fun getRounds()
 }
 
 class HomeViewModelImpl(
@@ -21,7 +21,7 @@ class HomeViewModelImpl(
     init{
         getRounds()
     }
-    private fun getRounds(){
+    override fun getRounds(){
         viewModelScope.launch {
             try {
                 rounds.emit(homeRepository.getNextRounds())
@@ -34,4 +34,5 @@ class HomeViewModelImpl(
 
 class HomeViewModelPreview : HomeViewModel() {
     override val rounds: Flow<List<Round>> = flowOf()
+    override fun getRounds() {}
 }

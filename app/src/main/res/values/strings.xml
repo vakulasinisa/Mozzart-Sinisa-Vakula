@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Mozzart Sinisa Vakula</string>
+    <string name="greece_lotto">Grčki kino (20/80)</string>
+    <string name="draw_time">Vreme izvlačenja</string>
+    <string name="remaining_time_for_payment">Preostalo za uplatu</string>
+    <string name="draw_is_started">Izvlačenje je počelo</string>
+    <string name="random_selected">Slučajni odabir</string>
+    <string name="payment">Uplati</string>
+    <string name="selected_numbers">Selektovano %s/20</string>
+    <string name="games">Igre</string>
+    <string name="results">Rezultati</string>
+    <string name="my_tickets">Moji tiketi</string>
+    <string name="draw_time_info">Vreme izvlačenja: %s</string>
+    <string name="draw_number">Broj kola: %d</string>
+    <string name="draw">Kolo: %d</string>
+    <string name="remaining_time_for_payment_info">Preostalo za uplatu: %s</string>
+    <string name="odds">Kvote:</string>
+    <string name="success_title">Uspešno ste odigrali tiket!!!</string>
+    <string name="ok">U redu</string>
 </resources>

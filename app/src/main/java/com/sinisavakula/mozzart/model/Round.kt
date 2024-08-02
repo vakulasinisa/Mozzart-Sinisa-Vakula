@@ -1,19 +1,18 @@
-@file:Suppress("PLUGIN_IS_NOT_ENABLED")
-
 package com.sinisavakula.mozzart.model
 
 import kotlinx.serialization.Serializable
 
+@Suppress("PLUGIN_IS_NOT_ENABLED")
 @Serializable
 data class Round(
-    val id: String,
-    val gameId: Int,
-    val drawId: Int,
-    val drawTime: String,
-    val status: String,
-    val drawBreak: Int,
-    val visualDraw: Int,
-    val pricePoints: PricePoint,
-    val prizeCategories: List<PriceCategory>,
-    val wagerStatistics: WagerStatistics
+    val id: String? = null,
+    val gameId: Int? = null,
+    val drawId: Int? = null,
+    val drawTime: Long = 0,
+    val status: String? = null,
+    val drawBreak: Int? = null,
+    val visualDraw: Int? = null,
+    val pricePoints: PricePoint? = null,
+    val prizeCategories: List<PriceCategory>? = null,
+    val wagerStatistics: WagerStatistics? = null
 )
