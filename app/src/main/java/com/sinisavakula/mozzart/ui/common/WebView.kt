@@ -1,22 +1,28 @@
 package com.sinisavakula.mozzart.ui.common
 
-import android.view.ViewGroup
-import android.webkit.WebChromeClient
+import android.annotation.SuppressLint
 import android.webkit.WebView
+import android.webkit.WebViewClient
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 
+@SuppressLint("SetJavaScriptEnabled")
 @Composable
-fun WebViewScreen(url: String = "https://mozzartbet.com/sr/lotto-animation/26#") {
-    AndroidView(factory = {
-        WebView(it).apply {
-            this.layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-            this.webChromeClient = WebChromeClient()
+fun WebViewScreen(url: String) {
+
+    AndroidView(
+        modifier = Modifier.fillMaxSize(),
+        factory = { ctx ->
+            WebView(ctx).apply {
+                webViewClient = WebViewClient()
+                settings.javaScriptEnabled = true
+                settings.domStorageEnabled = true
+                settings.allowFileAccess = true
+                settings.loadsImagesAutomatically = true
+                loadUrl(url)
+            }
         }
-    }, update = {
-        it.loadUrl(url)
-    })
+    )
 }

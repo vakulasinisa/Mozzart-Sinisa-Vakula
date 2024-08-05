@@ -10,8 +10,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.sinisavakula.mozzart.misc.toBorderColor
 import com.sinisavakula.mozzart.ui.theme.MozzartSinisaVakulaTheme
 
 @Composable
@@ -27,7 +29,7 @@ fun ResultNumberItem(
                 .clip(CircleShape)
                 .border(
                     width = 2.dp,
-                    color = Color.Blue,
+                    color = colorResource(id =  number.toBorderColor()),
                     CircleShape
                 ),
             contentAlignment = Alignment.Center,
@@ -35,6 +37,7 @@ fun ResultNumberItem(
             ) {
             Text(
                 text = number.toString(),
+                color = Color.White
             )
         }
     }

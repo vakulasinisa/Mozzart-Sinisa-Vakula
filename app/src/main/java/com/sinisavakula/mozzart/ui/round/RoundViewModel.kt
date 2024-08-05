@@ -13,12 +13,11 @@ import kotlin.random.Random
 
 abstract class RoundViewModel : ViewModel() {
     abstract val selectedNumbers: Flow<List<Int>>
-    abstract val round: Flow<Round>
+    abstract val round: Round?
     abstract val event: Channel<RoundEvent>
     abstract fun setNumber(isChecked: Boolean, number: Int)
     abstract fun setRandomNumbers()
-    abstract fun payment()
-    abstract fun getDrawTime():Long
+    abstract fun getDrawTime():Long?
 }
 
 class RoundViewModelImpl(
@@ -27,7 +26,7 @@ class RoundViewModelImpl(
 ) : RoundViewModel() {
 
     override val selectedNumbers = MutableStateFlow(listOf<Int>())
-    override val round = MutableStateFlow(Round())
+    override var round: Round? = null
     override val event = Channel<RoundEvent>()
 
     init {
@@ -36,7 +35,7 @@ class RoundViewModelImpl(
     private fun getRound(){
         viewModelScope.launch {
             try {
-                round.emit(talonRepository.getRound(drawId))
+                round = talonRepository.getRound(drawId)
                 event.send(RoundEvent.RoundFetched)
             } catch (throwable: Throwable) {
                 throwable.printStackTrace()
@@ -74,12 +73,8 @@ class RoundViewModelImpl(
         }
     }
 
-    override fun payment() {
-
-    }
-
-    override fun getDrawTime(): Long {
-        return round.value.drawTime
+    override fun getDrawTime(): Long? {
+        return round?.drawTime
     }
 }
 
@@ -89,11 +84,10 @@ sealed class RoundEvent {
 
 class RoundViewModelPreview : RoundViewModel() {
     override val selectedNumbers: Flow<List<Int>> = flowOf()
-    override val round: Flow<Round> = flowOf()
+    override val round: Round = Round()
     override val event = Channel<RoundEvent>()
 
     override fun setNumber(isChecked: Boolean, number: Int) {}
     override fun setRandomNumbers() {}
-    override fun payment() {}
     override fun getDrawTime(): Long = 0
 }

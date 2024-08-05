@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -13,16 +14,22 @@ import androidx.compose.ui.unit.dp
 import com.sinisavakula.mozzart.model.Odds
 
 @Composable
-fun OddItem (
+fun OddItem(
     odd: Odds
-){
+) {
     Row {
         Column(
             modifier = Modifier.padding(5.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = odd.number.toString())
-            Text(text = odd.odds.toLong().toString())
+            Text(
+                text = odd.number.toString(),
+                color = MaterialTheme.colorScheme.secondary
+            )
+            Text(
+                text = odd.odds.toLong().toString(),
+                color = MaterialTheme.colorScheme.secondary
+            )
         }
         HorizontalDivider(color = Color.Gray)
     }

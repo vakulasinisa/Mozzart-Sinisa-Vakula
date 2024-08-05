@@ -23,6 +23,7 @@ class HomeViewModelImpl(
     }
     override fun getRounds(){
         viewModelScope.launch {
+            rounds.emit(listOf())
             try {
                 rounds.emit(homeRepository.getNextRounds())
             } catch (throwable: Throwable) {

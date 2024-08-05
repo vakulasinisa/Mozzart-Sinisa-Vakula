@@ -7,17 +7,21 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.sinisavakula.mozzart.ui.common.WebViewScreen
 import com.sinisavakula.mozzart.ui.results.Results
 import com.sinisavakula.mozzart.ui.results.ResultsViewModel
@@ -25,11 +29,11 @@ import com.sinisavakula.mozzart.ui.results.ResultsViewModelPreview
 import com.sinisavakula.mozzart.ui.round.RoundItem
 import com.sinisavakula.mozzart.ui.theme.MozzartSinisaVakulaTheme
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 private const val HOME = "home"
-private const val RESULTS = "results"
-private const val DRAW = "draw"
+private const val RESULTS = "home_results"
+private const val DRAW = "home_draw"
+private const val DRAW_ANIMATION_URL = "https://oldsite.mozzartbet.com/sr/lotto-animation/26/#/"
 
 @Composable
 fun Home(
@@ -37,26 +41,25 @@ fun Home(
     resultsViewModel: ResultsViewModel,
     navigateToRound: (Int?) -> Unit
 ) {
-
-    val coroutineScope = rememberCoroutineScope()
     val navController = rememberNavController()
-    val selectedIndex = remember { mutableStateOf(0) }
+    val selectedIndex = remember { mutableIntStateOf(0) }
+    var refreshing by remember { mutableStateOf(false) }
+
+    LaunchedEffect(refreshing) {
+        if (refreshing) {
+            delay(1000)
+            refreshing = false
+        }
+    }
 
     Scaffold(
         bottomBar = {
-            BottomNavigationBar(selectedIndex.value) { newIndex ->
-                selectedIndex.value = newIndex
+            BottomNavigationBar(selectedIndex.intValue) { newIndex ->
+                selectedIndex.intValue = newIndex
                 when (newIndex) {
                     0 -> navController.navigate(HOME)
                     1 -> navController.navigate(RESULTS)
-                    2 -> {
-                        navController.navigate(DRAW)
-                        coroutineScope.launch {
-                            delay(1000)
-                            selectedIndex.value = 0
-                            navController.navigate(HOME)
-                        }
-                    }
+                    2 -> navController.navigate(DRAW)
                 }
             }
         }
@@ -66,16 +69,25 @@ fun Home(
             startDestination = HOME,
             Modifier.padding(innerPadding)
         ) {
-            composable("home") {
+            composable(HOME) {
                 val rounds by viewModel.rounds.collectAsState(initial = listOf())
                 Column(
                     modifier = Modifier
                         .background(Color.Black)
                 ) {
                     HomeToolbar()
-                    LazyColumn {
-                        items(rounds) { round ->
-                            RoundItem(round = round, onClick = { navigateToRound(round.drawId) })
+                    SwipeRefresh(state = rememberSwipeRefreshState(isRefreshing = refreshing),
+                        onRefresh = {
+                            refreshing = true
+                            viewModel.getRounds()
+                        }) {
+
+                        LazyColumn {
+                            items(rounds) { round ->
+                                RoundItem(
+                                    round = round,
+                                    onClick = { navigateToRound(round.drawId) })
+                            }
                         }
                     }
                 }
@@ -84,7 +96,7 @@ fun Home(
                 Results(viewModel = resultsViewModel)
             }
             composable(DRAW) {
-                WebViewScreen(url = "https://mozzartbet.com/sr/lotto-animation/26#")
+                WebViewScreen(url = DRAW_ANIMATION_URL)
             }
         }
     }

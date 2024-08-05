@@ -3,6 +3,7 @@ package com.sinisavakula.mozzart.ui.results
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sinisavakula.mozzart.model.Result
+import com.sinisavakula.mozzart.model.WinningNumbers
 import com.sinisavakula.mozzart.model.response.ResultsResponse
 import com.sinisavakula.mozzart.repositories.ResultsRepository
 import kotlinx.coroutines.flow.Flow
@@ -22,7 +23,8 @@ class ResultsViewModelImpl(
     init {
         getResults()
     }
-    private fun getResults(){
+
+    private fun getResults() {
         viewModelScope.launch {
             try {
                 val response: ResultsResponse = resultsRepository.getResults()
@@ -35,5 +37,15 @@ class ResultsViewModelImpl(
 }
 
 class ResultsViewModelPreview : ResultsViewModel() {
-    override val results: Flow<List<Result>> = flowOf()
+    override val results: Flow<List<Result>> = flowOf(
+        listOf(
+            Result(
+                drawId = 0,
+                drawTime = 0,
+                gameId = 0,
+                status = "",
+                winningNumbers = WinningNumbers(list = (1..20).toList())
+            )
+        )
+    )
 }

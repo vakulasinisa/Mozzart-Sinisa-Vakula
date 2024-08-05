@@ -1,17 +1,19 @@
 package com.sinisavakula.mozzart.ui.round
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -25,60 +27,72 @@ import com.sinisavakula.mozzart.misc.toTime
 import com.sinisavakula.mozzart.model.Odds
 import com.sinisavakula.mozzart.model.Round
 import com.sinisavakula.mozzart.ui.common.AppButton
+import com.sinisavakula.mozzart.ui.common.Table
 import com.sinisavakula.mozzart.ui.theme.MozzartSinisaVakulaTheme
 
 @Composable
 fun Talon(
-    round: Round,
+    round: Round?,
     remainingTime: String,
     selectedNumbers: List<Int>,
     onClickNumber: (Boolean, Int) -> Unit,
     onClickRandom: () -> Unit,
     onClickPayment: () -> Unit,
 ) {
-    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-        Text(text = stringResource(id = R.string.draw_time_info, round.drawTime.toTime()))
+    Column(
+        modifier = Modifier
+            .background(Color.Black)
+            .fillMaxSize()
+            .padding(10.dp)
+    ) {
+
+        Text(
+            text = stringResource(id = R.string.draw_time_info, round?.drawTime?.toTime()?:""),
+            color = MaterialTheme.colorScheme.secondary
+        )
         Text(
             text = stringResource(
                 id = R.string.remaining_time_for_payment_info, remainingTime
-            )
+            ),
+            color = MaterialTheme.colorScheme.secondary
         )
 
         Text(
-            text = stringResource(id = R.string.draw_number, round.drawId ?: 0)
+            text = stringResource(id = R.string.draw_number, round?.drawId ?: 0),
+            color = MaterialTheme.colorScheme.secondary
         )
         Text(
-            text = stringResource(id = R.string.odds)
+            text = stringResource(id = R.string.odds),
+            color = MaterialTheme.colorScheme.secondary
         )
-
-        Box(modifier = Modifier.border(1.dp, color = Color.Gray).padding(10.dp)){
-            LazyRow{
-                items(Odds.entries.toTypedArray()){odd ->
+        Spacer(modifier = Modifier.height(10.dp))
+        Box(
+            modifier = Modifier
+                .border(1.dp, color = MaterialTheme.colorScheme.secondary)
+                .padding(10.dp)
+        ) {
+            LazyRow {
+                items(Odds.entries.toTypedArray()) { odd ->
                     OddItem(odd)
                 }
             }
         }
-        repeat(8) { row ->
-            Row {
-                repeat(10) { column ->
-                    val number = row * 10 + column + 1
-                    NumberItem(
-                        modifier = Modifier.weight(1F),
-                        number = number,
-                        isSelected = selectedNumbers.contains(number),
-                        onClick = { isSelected, selectedNumber ->
-                            onClickNumber(isSelected, selectedNumber)
-                        }
-                    )
-                }
-            }
-        }
+        Spacer(modifier = Modifier.height(20.dp))
+        Table(
+            numberOfRow = 8,
+            numberOfColumn = 10,
+            numbers = (1..80).toList(),
+            selectedNumbers = selectedNumbers,
+            onClickNumber = onClickNumber,
+            isTalon = true
+        )
 
         Text(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(15.dp),
             textAlign = TextAlign.Center,
+            color = MaterialTheme.colorScheme.secondary,
             text = stringResource(id = R.string.selected_numbers, selectedNumbers.size)
         )
         Row(modifier = Modifier.padding(15.dp)) {

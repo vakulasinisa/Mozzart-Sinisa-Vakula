@@ -9,7 +9,6 @@
     <string name="selected_numbers">Selektovano %s/20</string>
     <string name="games">Igre</string>
     <string name="results">Rezultati</string>
-    <string name="my_tickets">Moji tiketi</string>
     <string name="draw_time_info">Vreme izvlačenja: %s</string>
     <string name="draw_number">Broj kola: %d</string>
     <string name="draw">Kolo: %d</string>
@@ -18,4 +17,5 @@
     <string name="success_title">Uspešno ste odigrali tiket!!!</string>
     <string name="ok">U redu</string>
     <string name="live_draw">Izvlačenje uživo</string>
+    <string name="time_is_up">Isteklo je vreme za uplatu!!!</string>
 </resources>

@@ -1,6 +1,6 @@
 package com.sinisavakula.mozzart.ui.results
 
-import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,10 +16,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sinisavakula.mozzart.R
 import com.sinisavakula.mozzart.misc.toTime
 import com.sinisavakula.mozzart.model.Result
+import com.sinisavakula.mozzart.model.WinningNumbers
+import com.sinisavakula.mozzart.ui.common.Table
+import com.sinisavakula.mozzart.ui.theme.MozzartSinisaVakulaTheme
 
 @Composable
 fun ResultItem(result: Result) {
@@ -32,31 +36,43 @@ fun ResultItem(result: Result) {
                     color = MaterialTheme.colorScheme.secondary,
                     shape = RoundedCornerShape(10.dp)
                 )
+                .background(Color.Black)
                 .padding(10.dp)
         ) {
             Row {
-                Text(text = stringResource(id = R.string.draw_time_info, result.drawTime.toTime()))
+                Text(
+                    text = stringResource(id = R.string.draw_time_info, result.drawTime.toTime()),
+                    color = Color.White
+                )
                 Spacer(modifier = Modifier.weight(1F))
                 Text(
-                    text = stringResource(id = R.string.draw, result.drawId)
+                    text = stringResource(id = R.string.draw, result.drawId),
+                    color = Color.White
                 )
             }
             HorizontalDivider(modifier = Modifier.padding(vertical = 10.dp), color = Color.Gray)
-            repeat(3) { row ->
-                Row (modifier = Modifier.padding(5.dp)){
-                    Log.d("TestNumbers", "time: " +row)
-                    repeat(7) { column ->
-                        val number = row * 7 + column
-                        Log.d("TestNumbers", "number: " + number + " wining: " + result.winningNumbers.list.size)
-                        if (number < 20) {
-                            ResultNumberItem(
-                                modifier = Modifier.weight(1F),
-                                number = result.winningNumbers.list[number],
-                            )
-                        }
-                    }
-                }
-            }
+            Table(
+                numberOfRow = 3,
+                numberOfColumn = 7,
+                numbers = result.winningNumbers.list,
+                isTalon = false
+            )
         }
+    }
+}
+
+@Preview
+@Composable
+fun ResultItemPreview() {
+    MozzartSinisaVakulaTheme {
+        ResultItem(
+            result = Result(
+                gameId = 0,
+                drawId = 0,
+                drawTime = 0,
+                status = "",
+                winningNumbers = WinningNumbers((1..20).toList())
+            )
+        )
     }
 }

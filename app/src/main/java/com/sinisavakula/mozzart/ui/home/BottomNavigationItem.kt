@@ -42,6 +42,7 @@ fun BottomNavigationItem(
         )
         Text(
             text = title,
+            minLines = 2,
             color = contentColor,
             textAlign = TextAlign.Center
         )

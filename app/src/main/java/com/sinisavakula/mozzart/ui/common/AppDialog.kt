@@ -17,7 +17,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import com.sinisavakula.mozzart.R
 
 @Composable
@@ -29,16 +28,13 @@ fun AppDialog (
 ){
     Dialog(
         onDismissRequest = onClickButton,
-        properties = DialogProperties(
-            usePlatformDefaultWidth = false
-        )
     ) {
         Surface(
             shape = RoundedCornerShape( 24.dp),
             color = MaterialTheme.colorScheme.surface,
         ) {
             Column(
-                modifier = Modifier.padding(20.dp),
+                modifier = Modifier.padding(50.dp),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -47,7 +43,7 @@ fun AppDialog (
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(horizontal = 30.dp)
                 )
-                Spacer(modifier = Modifier.height(50.dp))
+                Spacer(modifier = Modifier.height(30.dp))
                 AppButton(
                     text = stringResource(id = buttonText),
                     onClick = onClickButton,

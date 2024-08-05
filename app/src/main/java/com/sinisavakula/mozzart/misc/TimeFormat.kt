@@ -1,7 +1,6 @@
 package com.sinisavakula.mozzart.misc
 
 import android.annotation.SuppressLint
-import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -16,7 +15,6 @@ fun formatTime(totalSeconds: Long): String {
 }
 
 fun Long.toRemainingTime():String {
-    Log.d("TestTimeFormat", "time: " + this)
     val time = this - System.currentTimeMillis()
     return formatTime(time/1000)
 }

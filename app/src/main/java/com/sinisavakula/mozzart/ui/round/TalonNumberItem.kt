@@ -11,12 +11,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.sinisavakula.mozzart.misc.toBorderColor
 import com.sinisavakula.mozzart.ui.theme.MozzartSinisaVakulaTheme
 
 @Composable
-fun NumberItem(
+fun TalonNumberItem(
     modifier: Modifier = Modifier,
     number: Int,
     isSelected: Boolean = false,
@@ -30,7 +32,7 @@ fun NumberItem(
                 .clip(CircleShape)
                 .border(
                     width = 2.dp,
-                    color = if (isSelected) Color.Blue else Color.White,
+                    color = if (isSelected) colorResource(id = number.toBorderColor()) else Color.Black,
                     CircleShape
                 )
                 .clickable { onClick(!isSelected, number) },
@@ -39,6 +41,7 @@ fun NumberItem(
             ) {
             Text(
                 text = number.toString(),
+                color = Color.White
             )
         }
     }
@@ -46,9 +49,9 @@ fun NumberItem(
 
 @Preview
 @Composable
-fun NumberItemPreview() {
+fun TalonNumberItemPreview() {
     MozzartSinisaVakulaTheme {
-        NumberItem(
+        TalonNumberItem(
             number = 1,
             onClick = {_,_ ->}
         )
@@ -57,9 +60,9 @@ fun NumberItemPreview() {
 
 @Preview
 @Composable
-fun NumberItemSelectedPreview() {
+fun TalonNumberItemSelectedPreview() {
     MozzartSinisaVakulaTheme {
-        NumberItem(
+        TalonNumberItem(
             number = 1,
             isSelected = true,
             onClick = {_,_ ->}

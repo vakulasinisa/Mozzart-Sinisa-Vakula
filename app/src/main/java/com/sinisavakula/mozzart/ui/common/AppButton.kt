@@ -1,7 +1,6 @@
 package com.sinisavakula.mozzart.ui.common
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
@@ -11,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,7 +40,7 @@ fun AppButton(
     val focusManager = LocalFocusManager.current
     Box(
         modifier = Modifier
-            .background(color = if (enabled) Color.Blue else Color.Gray)
+            .background(color = if (enabled) MaterialTheme.colorScheme.primary else Color.Gray)
             .run {
                 if (enabled) {
                     clickable {
@@ -54,18 +54,13 @@ fun AppButton(
                         }
                     }
                 }
-            }
-            .border(
-                1.dp,
-                color = if (enabled) Color.Blue else Color.Gray,
-                shape = RoundedCornerShape(8.dp)
-            ),
+            },
         contentAlignment = Alignment.Center,
     ) {
 
         Text(
             text = text,
-            color = Color.White,
+            color = if (enabled) MaterialTheme.colorScheme.secondary else Color.White,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier

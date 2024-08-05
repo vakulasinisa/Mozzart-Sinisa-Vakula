@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,7 +25,7 @@ import com.sinisavakula.mozzart.ui.theme.MozzartSinisaVakulaTheme
 
 @Composable
 fun HomeToolbar(){
-    Column(modifier = Modifier.background(Color.LightGray)) {
+    Column(modifier = Modifier.background(MaterialTheme.colorScheme.primary)) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -38,15 +39,20 @@ fun HomeToolbar(){
             )
             Text(
                 text = stringResource(id = R.string.greece_lotto),
+                color = MaterialTheme.colorScheme.secondary,
                 fontSize = 20.sp
             )
 
         }
         HorizontalDivider(color = Color.Gray)
         Row(modifier = Modifier.fillMaxWidth().padding(5.dp)) {
-            Text(text = stringResource(id = R.string.draw_time))
+            Text(
+                text = stringResource(id = R.string.draw_time),
+                color = MaterialTheme.colorScheme.secondary
+                )
             Spacer(modifier = Modifier.weight(1F))
-            Text(text = stringResource(id = R.string.remaining_time_for_payment))
+            Text(text = stringResource(id = R.string.remaining_time_for_payment),
+                color = MaterialTheme.colorScheme.secondary)
         }
     }
 }
